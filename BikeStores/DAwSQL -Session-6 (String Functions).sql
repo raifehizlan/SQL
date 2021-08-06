@@ -282,7 +282,11 @@ WHERE	ISNUMERIC (SUBSTRING( street, 3, 1) ) = 1
 
 
 --In the street column, clear the string characters that were accidentally added to the end of the initial numeric expression.
-
+select street, 
+			(case when isnumeric(right(left(street, CHARINDEX(' ',street)-1), 1))=0
+			then replace(street,right(left(street, CHARINDEX(' ',street)-1), 1),'')
+			else street end) as modified_street
+from sales.customers
 
 
 
